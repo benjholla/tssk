@@ -3,7 +3,6 @@ import getopt
 import subprocess
 import StringIO
 
-# http://www.diveintopython.net/scripts_and_streams/command_line_arguments.html
 def main(argv):
 	# set option defaults
 	tshark = "tshark" # uses system variable as default tshark location
@@ -37,12 +36,12 @@ def main(argv):
 		print "tshark: " + tshark
 	
 	# make sure we have a valid capture device
+	out,err = subprocess.Popen(['tshark', '-D'], stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+	deviceList = (err if out == "" else out).strip()
 	if not deviceID and not deviceName:
 		print "Select a capture device with '--device=' argument:"
-		print subprocess.Popen(tshark + " -D", stdout=subprocess.PIPE, shell=True).stdout.read()
+		print deviceList
 	else:
-		out,err = subprocess.Popen(['tshark', '-D'], stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
-		deviceList = (err if out == "" else out)
 		for line in StringIO.StringIO(deviceList).readlines():
 			deviceEntry = line.split(" ")
 			deviceEntryID = int(deviceEntry[0].replace(".","").strip())
