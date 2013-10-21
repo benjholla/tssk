@@ -135,73 +135,37 @@ def parseCapture(command, debug):
 		
 		# parse out data variables
 		if "\t" in data:
-			values = data.split("\t")
-			if len(values) == 20:
-				macAddressWired = str(values[0])
-				print "MAC Address Wired: " + macAddressWired
-
-				macAddressWireless = str(values[1])
-				print "MAC AddressWireless: " + macAddressWireless
-
-				ipv4Address = str(values[2])
-				print "IPv4 Address: " + ipv4Address
-
-				ipv6Address = str(values[3])
-				print "IPv6 Address: " + ipv6Address
-
-				tcpSource = str(values[4])
-				print "TCP Source: " + tcpSource
-
-				tcpDestination = str(values[5])
-				print "TCP Destination: " + tcpDestination
-
-				udpSource = str(values[6])
-				print "UDP Source: " + udpSource
-
-				udpDestination = str(values[7])
-				print "UDP Destination: " + udpDestination
-
-				netbiosCommand = str(values[8])
-				print "Netbios Command: " + netbiosCommand
-
-				netbiosName = str(values[9])
-				print "Netbios Name: " + netbiosName
-
-				mdnsName = str(values[10])
-				print "MDNS Name: " + mdnsName
-
-				requestHost = str(values[11])
-				print "Request Host: " + requestHost
-
-				requestUri = str(values[12])
-				print "Request URI: " + requestUri
-
-				accept = str(values[13])
-				print "Accept: " + accept
-
-				acceptEncoding = str(values[14])
-				print "Accept Encoding: " + acceptEncoding
-
-				userAgent = str(values[15])
-				print "User Agent: " + userAgent
-
-				refererUri = str(values[16])
-				print "Referer URI: " + refererUri
-
-				cookie = str(values[17])
-				print "Cookie: " + cookie
-
-				authorization = str(values[18])
-				print "Authorization: " + authorization
-
-				authBasic = str(values[19])
-				print "Auth Basic: " + authBasic
-
-				print "\n----------------------\n"
-		
+			columns = data.split("\t")
+			if len(columns) == 20:
+				values = {}
+				values['eth.src'] = str(columns[0])
+				values['wlan.sa'] = str(columns[1])
+				values['ip.src'] = str(columns[2])
+				values['ipv6.src'] = str(columns[3])
+				values['tcp.srcport'] = str(columns[4])
+				values['udp.srcport'] = str(columns[5])
+				values['tcp.dstport'] = str(columns[6])
+				values['udp.dstport'] = str(columns[7])
+				values['browser.command'] = str(columns[8])
+				values['browser.server'] = str(columns[9])
+				values['dns.resp.name'] = str(columns[10])
+				values['http.host'] = str(columns[11])
+				values['http.request.uri'] = str(columns[12])
+				values['http.accept'] = str(columns[13])
+				values['http.accept_encoding'] = str(columns[14])
+				values['http.user_agent'] = str(columns[15])
+				values['http.referer'] = str(columns[16])
+				values['http.cookie'] = str(columns[17])
+				values['http.authorization'] = str(columns[18])
+				values['http.authbasic'] = str(columns[19])
+				detectSession(values, debug)
+				
 		# end of stream
 		if len(data) == 0:
 			break
+
+def detectSession(values, debug):
+	print str(values)
 
 def usage():
 	print "Usage: tssk [options] ..."
