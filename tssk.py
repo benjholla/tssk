@@ -95,7 +95,7 @@ def main(argv):
 			print "The specified pcap file does not exist."
 
 def parseCapture(command, debug):
-	# add format of text output
+	# add tab seperated fields formatting
 	command += ['-T', 'fields']
 	command += ['-E', 'separator=/t']
 	# add fields to print
@@ -125,7 +125,7 @@ def parseCapture(command, debug):
 		
 	proc = None
 	if debug:
-		# not capturing error stream, its output is decent user feedback
+		# letting error stream pass through to user, its output is good feedback
 		proc = Popen(command, shell=False, stdout=PIPE)
 	else:
 		proc = Popen(command, shell=False, stdout=PIPE, stderr=PIPE)
@@ -133,8 +133,73 @@ def parseCapture(command, debug):
 	while True:
 		data = proc.stdout.readline()
 		
-		print "Line: " + data
+		# parse out data variables
+		if "\t" in data:
+			values = data.split("\t")
+			if len(values) == 20:
+				macAddressWired = str(values[0])
+				print "MAC Address Wired: " + macAddressWired
+
+				macAddressWireless = str(values[1])
+				print "MAC AddressWireless: " + macAddressWireless
+
+				ipv4Address = str(values[2])
+				print "IPv4 Address: " + ipv4Address
+
+				ipv6Address = str(values[3])
+				print "IPv6 Address: " + ipv6Address
+
+				tcpSource = str(values[4])
+				print "TCP Source: " + tcpSource
+
+				tcpDestination = str(values[5])
+				print "TCP Destination: " + tcpDestination
+
+				udpSource = str(values[6])
+				print "UDP Source: " + udpSource
+
+				udpDestination = str(values[7])
+				print "UDP Destination: " + udpDestination
+
+				netbiosCommand = str(values[8])
+				print "Netbios Command: " + netbiosCommand
+
+				netbiosName = str(values[9])
+				print "Netbios Name: " + netbiosName
+
+				mdnsName = str(values[10])
+				print "MDNS Name: " + mdnsName
+
+				requestHost = str(values[11])
+				print "Request Host: " + requestHost
+
+				requestUri = str(values[12])
+				print "Request URI: " + requestUri
+
+				accept = str(values[13])
+				print "Accept: " + accept
+
+				acceptEncoding = str(values[14])
+				print "Accept Encoding: " + acceptEncoding
+
+				userAgent = str(values[15])
+				print "User Agent: " + userAgent
+
+				refererUri = str(values[16])
+				print "Referer URI: " + refererUri
+
+				cookie = str(values[17])
+				print "Cookie: " + cookie
+
+				authorization = str(values[18])
+				print "Authorization: " + authorization
+
+				authBasic = str(values[19])
+				print "Auth Basic: " + authBasic
+
+				print "\n----------------------\n"
 		
+		# end of stream
 		if len(data) == 0:
 			break
 
@@ -148,7 +213,7 @@ def usage():
 	print "Miscellaneous:"
 	print "  -h                       display this help and exit"
 	print "  -v                       display version info and exit"
-	print "  -d                       enable debug messages"
+	print "  -d                       enable debug messages (verbose mode)"
 
 if __name__ == "__main__":
 	main(sys.argv[1:])
