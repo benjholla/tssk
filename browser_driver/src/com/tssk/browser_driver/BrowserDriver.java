@@ -11,7 +11,6 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
-import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
 import org.openqa.selenium.Proxy;
@@ -69,64 +68,57 @@ public class BrowserDriver {
 		CommandLineParser parser = new PosixParser();
 
 		// create browser driver option groups
-		OptionGroup usageOptions = new OptionGroup();
-		OptionGroup configurationOptions = new OptionGroup();
-		OptionGroup requestOptions = new OptionGroup();
+		Options options = new Options();
 		
 		// help option
 		Option helpOption = new Option(HELP_SHORT, HELP_LONG, false, "Print usage options.");
 		helpOption.setRequired(false);
-		usageOptions.addOption(helpOption);
+		options.addOption(helpOption);
 		
 		// version option
 		Option versionOption = new Option(VERSION_SHORT, VERSION_LONG, false, "Print version.");
 		versionOption.setRequired(false);
-		usageOptions.addOption(versionOption);
+		options.addOption(versionOption);
 		
 		// proxy server port option
 		Option proxyOption = new Option(PROXY_PORT_SHORT, PROXY_PORT_LONG, true, "The port to use for the HTTP proxy server.  Default value: 4444.");
 		proxyOption.setRequired(false);
-		configurationOptions.addOption(proxyOption);
+		options.addOption(proxyOption);
 		
 		// domain option
 		Option domainOption = new Option(DOMAIN_SHORT, DOMAIN_LONG, true, "The domain name of the server (for virtual hosting), and the TCP port number on which the server is listening. The port number may be omitted if the port is the standard port for the service requested.");
 		domainOption.setRequired(true);
-		requestOptions.addOption(domainOption);
+		options.addOption(domainOption);
 		
 		// uri option
 		Option uriOption = new Option(URI_LONG, true, "The path for the specified domain.");
 		uriOption.setRequired(true);
-		requestOptions.addOption(uriOption);
+		options.addOption(uriOption);
 		
 		// cookies option
 		Option cookiesOption = new Option(COOKIES_SHORT, COOKIES_LONG, true, "An HTTP cookie previously sent by the server with Set-Cookie.  Default value: \"\".");
 		cookiesOption.setRequired(false);
-		requestOptions.addOption(cookiesOption);
+		options.addOption(cookiesOption);
 		
 		// referer option
 		Option refererOption = new Option(REFERER_SHORT, REFERER_LONG, true, "The address of the previous web page from which a link to the currently requested page was followed. Default value: \"\".");
 		refererOption.setRequired(false);
-		requestOptions.addOption(refererOption);
+		options.addOption(refererOption);
 		
 		// user agent option
 		Option userAgentOption = new Option(USER_AGENT_SHORT, USER_AGENT_LONG, true, "The user agent string of the user agent.  Default value: \"\".");
 		userAgentOption.setRequired(false);
-		requestOptions.addOption(userAgentOption);
+		options.addOption(userAgentOption);
 		
 		// authorization option
 		Option authorizationOption = new Option(AUTHORIZATION_SHORT, AUTHORIZATION_LONG, true, "Authentication credentials for HTTP authentication.  Default value: \"text/plain\".");
 		authorizationOption.setRequired(false);
-		requestOptions.addOption(authorizationOption);
+		options.addOption(authorizationOption);
 		
 		// accept option
 		Option acceptOption = new Option(ACCEPT_LONG, true, "Content-Types that are acceptable for the response.  Default value: \"text/plain\".");
 		acceptOption.setRequired(false);
-		requestOptions.addOption(acceptOption);
-
-		Options options = new Options();
-		options.addOptionGroup(usageOptions);
-		options.addOptionGroup(configurationOptions);
-		options.addOptionGroup(requestOptions);
+		options.addOption(acceptOption);
 		
 		try {
 			if(args == null || args.length == 0){
@@ -206,7 +198,8 @@ public class BrowserDriver {
 			// start the browser up
 			WebDriver driver = new FirefoxDriver(capabilities);
 
-			server.addRequestInterceptor(new RequestInterceptor() {
+			server.addRequestInterceptor(new RequestInterceptor() {			
+
 				@Override
 				public void process(BrowserMobHttpRequest request) {
 					// rewrite cookies
