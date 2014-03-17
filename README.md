@@ -2,7 +2,29 @@ Tactical Session Stealing Kit
 ===============================
 (or tssk tssk why are you not using https?!)
 
-# Browser Driver
+# Overview
+TODO: More details coming soon...
+
+## Session Stealing
+
+    python tssk.py -h
+
+
+    Usage: tssk [options] ...
+    Configuration:
+      --tshark <filepath>      sets the path to tshark
+    Processing:
+      --pcap <filepath>        sets the path to the pcap file to parse
+      --device <id or name>    sets the device on which to capture traffic
+    Miscellaneous:
+      -h                       display this help and exit
+      -v                       display version info and exit
+      -d                       enable debug messages (verbose mode)
+
+## Browser Driver
+
+    java driver.jar -h
+
 
     usage: ant
      -acc,--accept <arg>           Content-Types that are acceptable for the
