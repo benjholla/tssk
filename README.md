@@ -7,8 +7,7 @@ TODO: More details coming soon...
 
 ## Session Stealing
 
-    python tssk.py -h
-
+`python tssk.py -h`
 
     Usage: tssk [options] ...
     Configuration:
@@ -23,8 +22,7 @@ TODO: More details coming soon...
 
 ## Browser Driver
 
-    java driver.jar -h
-
+`java driver.jar -h`
 
     usage: ant
      -acc,--accept <arg>           Content-Types that are acceptable for the
