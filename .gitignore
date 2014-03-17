@@ -49,3 +49,6 @@ Thumbs.db
 
 # PDT-specific
 .buildpath
+
+# Atlas
+.jatlas-settings/
