@@ -170,14 +170,14 @@ def detectSession(values, debug):
 def usage():
 	print "Usage: tssk [options] ..."
 	print "Configuration:"
-	print "  --tshark <filepath>      sets the path to tshark"
+	print "  --tshark <filepath>      Sets the path to tshark."
 	print "Processing:"
-	print "  --pcap <filepath>        sets the path to the pcap file to parse"
-	print "  --device <id or name>    sets the device on which to capture traffic"
+	print "  --pcap <filepath>        Sets the path to the pcap file to parse."
+	print "  --device <id or name>    Sets the device on which to capture traffic."
 	print "Miscellaneous:"
-	print "  -h                       display this help and exit"
-	print "  -v                       display version info and exit"
-	print "  -d                       enable debug messages (verbose mode)"
+	print "  -h                       Print usage options."
+	print "  -v                       Print version."
+	print "  -d                       Enable debug messages (verbose mode)."
 
 if __name__ == "__main__":
 	main(sys.argv[1:])

@@ -11,14 +11,14 @@ TODO: More details coming soon...
 
     Usage: tssk [options] ...
     Configuration:
-      --tshark <filepath>      sets the path to tshark
+      --tshark <filepath>      Sets the path to tshark.
     Processing:
-      --pcap <filepath>        sets the path to the pcap file to parse
-      --device <id or name>    sets the device on which to capture traffic
+      --pcap <filepath>        Sets the path to the pcap file to parse.
+      --device <id or name>    Sets the device on which to capture traffic.
     Miscellaneous:
-      -h                       display this help and exit
-      -v                       display version info and exit
-      -d                       enable debug messages (verbose mode)
+      -h                       Print usage options.
+      -v                       Print version.
+      -d                       Enable debug messages (verbose mode).
 
 ## Browser Driver
 
