@@ -24,7 +24,7 @@ TODO: More details coming soon...
 
 `java -jar driver.jar -h`
 
-    usage: ant
+    usage: driver [options] ...
      -acc,--accept <arg>           Content-Types that are acceptable for the response.  Default value: "text/plain".
      -auth,--authorization <arg>   Authentication credentials for HTTP authentication.  Default value: "".
      -c,--cookies <arg>            An HTTP cookie previously sent by the server with Set-Cookie.  Default value: "".
