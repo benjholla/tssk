@@ -127,7 +127,7 @@ public class BrowserDriver {
 		try {
 			if(args == null || args.length == 0){
 				HelpFormatter formatter = new HelpFormatter();
-				formatter.printHelp("ant", options);
+				formatter.printHelp("driver [options] ...", options);
 				return;
 			}
 			
@@ -141,8 +141,12 @@ public class BrowserDriver {
 			
 			if (arguments.hasOption(HELP_LONG)) {
 				HelpFormatter formatter = new HelpFormatter();
-				formatter.printHelp("ant", options);
+				formatter.printHelp("driver [options] ...", options);
 				return;
+			}
+			
+			if (!arguments.hasOption(DOMAIN_LONG) || !arguments.hasOption(URI_LONG)){
+				System.out.println("Error: Missing domain or URI.");
 			}
 			
 			domain = arguments.getOptionValue(DOMAIN_LONG);
