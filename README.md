@@ -22,7 +22,7 @@ TODO: More details coming soon...
 
 ## Browser Driver
 
-`java driver.jar -h`
+`java -jar driver.jar -h`
 
     usage: ant
      -acc,--accept <arg>           Content-Types that are acceptable for the response.  Default value: "text/plain".
