@@ -4,3 +4,4 @@
 # ignore exceptions
 !.gitignore
 !driver.jar
+!one-jar.properties
