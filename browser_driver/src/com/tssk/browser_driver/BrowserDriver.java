@@ -91,12 +91,12 @@ public class BrowserDriver {
 		
 		// domain option
 		Option domainOption = new Option(DOMAIN_SHORT, DOMAIN_LONG, true, "The domain name of the server (for virtual hosting), and the TCP port number on which the server is listening. The port number may be omitted if the port is the standard port for the service requested.");
-		domainOption.setRequired(true);
+		domainOption.setRequired(false);
 		options.addOption(domainOption);
 		
 		// uri option
 		Option uriOption = new Option(URI_SHORT, URI_LONG, true, "The path for the specified domain.");
-		uriOption.setRequired(true);
+		uriOption.setRequired(false);
 		options.addOption(uriOption);
 		
 		// cookies option
@@ -175,7 +175,7 @@ public class BrowserDriver {
 			// load the session into the browser and make the request
 			loadSession(domain, uri, cookies, referer, userAgent, authorization, accept, port);
 		} catch (Exception e) {
-			System.out.println("Unexpected exception:" + e.getMessage());
+			System.out.println("Error: " + e.getMessage());
 		}
 	}
 
@@ -206,7 +206,7 @@ public class BrowserDriver {
 
 			server.addRequestInterceptor(new RequestInterceptor() {
 				@Override
-				public void process(BrowserMobHttpRequest request, Har arg1) {
+				public void process(BrowserMobHttpRequest request, Har har) {
 					// rewrite cookies
 					request.getMethod().removeHeaders("Cookie");
 					request.getMethod().addHeader("Cookie", cookies);

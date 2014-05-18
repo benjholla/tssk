@@ -9,7 +9,6 @@ gen/
 tmp/
 .jatlas-settings/
 .settings/
-target/
 
 #Local configuration file
 local.properties
