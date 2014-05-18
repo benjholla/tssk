@@ -1,1 +1,7 @@
-/target
+# ignore everything in target
+/target/*
+
+# ignore exceptions
+!.gitignore
+!driver.jar
+!one-jar.properties
