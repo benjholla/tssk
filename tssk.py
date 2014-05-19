@@ -5,6 +5,8 @@ import StringIO
 
 # tssk version number
 version = "0.1"
+passiveStrategies = ["known-identifiers", "frequency-analysis"]
+activeStrategies = ["replay-similarity"]
 
 def main(argv):
 	# set option defaults
@@ -12,11 +14,12 @@ def main(argv):
 	deviceID = None
 	deviceName = None
 	pcap = None
+	strategy = None
 	debug = False
 		
 	# parse command line options
 	try:
-		opts, args = getopt.getopt(argv, "hvd", ["help", "version", "tshark=", "device=", "pcap="])
+		opts, args = getopt.getopt(argv, "hvd", ["help", "version", "strategy=", "tshark=", "device=", "pcap="])
 	except getopt.GetoptError:
 		usage()
 		sys.exit(2)
@@ -29,6 +32,8 @@ def main(argv):
 			sys.exit()
 		elif opt == '-d':
 			debug = True
+		elif opt in ("-s", "--strategy"):
+			strategy = arg
 		elif opt in ("--tshark"):
 			tshark = arg
 		elif opt in ("--pcap"):
@@ -39,6 +44,11 @@ def main(argv):
 			except ValueError:
 				deviceName = arg.strip()
 		args = "".join(args) # remaining arguments minus the declared options
+	
+	if not strategy:
+		print ("A session detection strategy is required."
+			"\nPassive options: %s\nActive options: %s\n" % (", ".join(passiveStrategies), ", ".join(activeStrategies)))
+		sys.exit(2)
 	
 	# options and arguments are parsed, perform operations
 	if debug:
@@ -90,11 +100,11 @@ def main(argv):
 			command += ['-r', pcap] 
 			
 			# start parsing the pcap file for sessions
-			parseCapture(command, debug)
+			parseCapture(command, strategy, debug)
 		except IOError:
 			print "The specified pcap file does not exist."
 
-def parseCapture(command, debug):
+def parseCapture(command, strategy, debug):
 	# add tab seperated fields formatting
 	command += ['-T', 'fields']
 	command += ['-E', 'separator=/t']
@@ -158,18 +168,40 @@ def parseCapture(command, debug):
 				values['http.cookie'] = str(columns[17])
 				values['http.authorization'] = str(columns[18])
 				values['http.authbasic'] = str(columns[19])
-				detectSession(values, debug)
+				# detect sessions from parsed request values
+				detectSession(values, strategy, debug)
 				
 		# end of stream
 		if len(data) == 0:
 			break
 
-def detectSession(values, debug):
-	print str(values)
+def detectSession(values, strategy, debug):
+	if debug:
+		print str(values)
+		
+	if strategy == passiveStrategies[0]:
+		knownIdentifiersAnalysis(values, debug)
+	elif strategy == passiveStrategies[1]:
+		frequencyAnalysis(values, debug)
+	elif strategy == activeStrategies[0]:
+		similarityAnalysis(values, debug)
+	else:
+		print "Unknown analysis strategy"
+		sys.exit(2)
+
+def frequencyAnalysis(values, debug):
+	print "TODO: frequency analysis"
+
+def knownIdentifiersAnalysis(values, debug):
+	print "TODO: known identifiers analysis"
+	
+def similarityAnalysis(values, debug):
+	print "TODO: similarity analysis"
 
 def usage():
 	print "Usage: tssk [options] ..."
 	print "Configuration:"
+	print "  --strategy <strategy>    Sets the session detection strategy."
 	print "  --tshark <filepath>      Sets the path to tshark."
 	print "Processing:"
 	print "  --pcap <filepath>        Sets the path to the pcap file to parse."
@@ -178,6 +210,7 @@ def usage():
 	print "  -h                       Print usage options."
 	print "  -v                       Print version."
 	print "  -d                       Enable debug messages (verbose mode)."
+	print "\n"
 
 if __name__ == "__main__":
 	main(sys.argv[1:])
