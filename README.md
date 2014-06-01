@@ -22,6 +22,8 @@ TODO: More details coming soon...
 
 ## Browser Driver
 
+The Browser Driver is a no frills combination of a Selenium web driver and the Browsermob Proxy for sending and rewriting HTTP requests.  The driver Jar can be used on the command line or included in a project.
+
 `java -jar driver.jar -h`
 
     usage: driver [options] ...
