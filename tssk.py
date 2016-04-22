@@ -87,7 +87,7 @@ def main(argv):
 				command += ['-f', 'tcp dst port 80 or udp src port 5353 or udp src port 138']
 				
 				# start parsing capture traffic for sessions
-				parseCapture(command, debug)
+				parseCapture(command, strategy, debug)
 	else:
 		try:
 			open(pcap) # ensure that the pcap file exists
